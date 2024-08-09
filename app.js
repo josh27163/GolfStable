@@ -88,6 +88,9 @@ function calculateStableford() {
     const resultsBody = document.getElementById('results-body');
     resultsBody.innerHTML = ''; // Clear previous results
 
+    let highestScore = 0;
+    let winners = [];
+
     players.forEach(player => {
         let stablefordPoints = 0;
         const handicapStrokes = course.map(hole => 
@@ -104,10 +107,34 @@ function calculateStableford() {
             stablefordPoints += calculatePoints(par, netScore);
         });
 
+        if (stablefordPoints > highestScore) {
+            highestScore = stablefordPoints;
+            winners = [player.name];
+        } else if (stablefordPoints === highestScore) {
+            winners.push(player.name);
+        }
+
         const resultRow = document.createElement('tr');
         resultRow.innerHTML = `<td>${player.name}</td><td>${stablefordPoints}</td>`;
         resultsBody.appendChild(resultRow);
     });
+
+    // Display winner message
+    const messageElement = document.createElement('div');
+    let msgText = '';
+    messageElement.id = 'winner-message';
+    if (winners.length === 1) {
+        messageElement.textContent = `Congratulations to ${winners[0]} for winning with ${highestScore} points!`;
+        msgText = `Congratulations to ${winners[0]} for winning with ${highestScore} points!`;
+    } else if (winners.length > 1) {
+        messageElement.textContent = `It's a tie! Congratulations to ${winners.join(', ')} for winning with ${highestScore} points each!`;
+        msgText = `It's a tie! Congratulations to ${winners.join(', ')} for winning with ${highestScore} points each!`;
+    } else {
+        messageElement.textContent = 'No winners determined. Please check the scores.';
+        msgText = 'No winners determined. Please check the scores.';
+    }
+    alert(msgText);
+    resultsBody.parentNode.insertAdjacentElement('afterend', messageElement);
 }
 
 function calculatePoints(par, netScore) {
