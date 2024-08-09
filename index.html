@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golf Stableford Scoring</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4; /* Light grey background for a modern look */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+        }
+        th, td {
+            border: 1px solid #ccc; /* Lighter border color */
+            padding: 12px; /* Increased padding for better readability */
+            text-align: left; /* Align text to left for modern look */
+        }
+        th {
+            background-color: #e8e8e8; /* Slightly darker header for contrast */
+        }
+        input[type="number"], input[type="text"] {
+            width: calc(100% - 24px); /* Full width with padding */
+            padding: 10px; /* Padding for better touch interaction */
+            margin: 5px 0; /* Spacing between inputs */
+            border: 1px solid #ccc; /* Consistent border styling */
+            border-radius: 4px; /* Rounded borders for modern look */
+        }
+        button {
+            width: 100%; /* Full width button */
+            padding: 12px; /* Larger padding for easier interaction */
+            background-color: #4CAF50; /* Green color for primary actions */
+            color: white; /* White text for contrast */
+            border: none; /* No border for button */
+            border-radius: 4px; /* Rounded corners for the button */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+        }
+        button:hover {
+            background-color: #45a049; /* Slightly darker on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Golf Stableford Scoring</h1>
+    
+    <h2 onclick="toggleVisibility('course-body')">Show Course</h2>
+    <table id="course-table">
+        <tr>
+            <th>Hole</th>
+            <th>Par</th>
+            <th>Stroke Index</th>
+        </tr>
+        <tbody id="course-body" style="display: none;">
+            <!-- Course holes will be dynamically inserted here -->
+        </tbody>
+    </table>
+
+    <h2>Players</h2>
+    <table id="players-table">
+        <tr>
+            <th>Player Name</th>
+            <th>Handicap</th>
+            <th colspan="18">Scores</th>
+        </tr>
+        <tbody id="players-body">
+            <!-- Players and their scores will be dynamically inserted here -->
+        </tbody>
+    </table>
+
+    <button onclick="calculateStableford()">Calculate Stableford Points</button>
+
+    <h2>Results</h2>
+    <table id="results-table">
+        <tr>
+            <th>Player Name</th>
+            <th>Stableford Points</th>
+        </tr>
+        <tbody id="results-body">
+            <!-- Results will be dynamically inserted here -->
+        </tbody>
+    </table>
+
+    <!-- Link to the JavaScript file -->
+    <script src="app.js"></script>
+</body>
+</html>

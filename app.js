@@ -1,0 +1,97 @@
+const course = [
+    { hole: 1, par: 3, strokeIndex: 5 },
+    { hole: 2, par: 4, strokeIndex: 9 },
+    { hole: 3, par: 3, strokeIndex: 3 },
+    { hole: 4, par: 4, strokeIndex: 1 },
+    { hole: 5, par: 3, strokeIndex: 6 },
+    { hole: 6, par: 4, strokeIndex: 4 },
+    { hole: 7, par: 3, strokeIndex: 8 },
+    { hole: 8, par: 4, strokeIndex: 7 },
+    { hole: 9, par: 4, strokeIndex: 2 }
+];
+
+const players = [
+    { name: 'Tom', handicap: 4, scores: Array(course.length).fill(0) },
+    { name: 'Garry', handicap: 12, scores: Array(course.length).fill(0) },
+    { name: 'Nigel', handicap: 12, scores: Array(course.length).fill(0) },
+    { name: 'Porky', handicap: 12, scores: Array(course.length).fill(0) },
+    { name: 'Whybrow', handicap: 22, scores: Array(course.length).fill(0) },
+    { name: 'Gibbs', handicap: 14, scores: Array(course.length).fill(0) },
+    { name: 'Josh', handicap: 7, scores: Array(course.length).fill(0) },
+    { name: 'George', handicap: 4, scores: Array(course.length).fill(0) },
+    { name: 'Chelsea', handicap: 16, scores: Array(course.length).fill(0) },
+    { name: 'Iwan', handicap: 12, scores: Array(course.length).fill(0) },
+    { name: 'Balaam', handicap: 15, scores: Array(course.length).fill(0) }
+];
+
+function updateCourseTable() {
+    const courseBody = document.getElementById('course-body');
+    courseBody.innerHTML = ''; // Clear the table before re-rendering
+
+    course.forEach(hole => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${hole.hole}</td>
+            <td>${hole.par}</td>
+            <td>${hole.strokeIndex}</td>
+        `;
+        courseBody.appendChild(row);
+    });
+}
+
+function updatePlayersTable() {
+    const playersBody = document.getElementById('players-body');
+    playersBody.innerHTML = ''; // Clear the table before re-rendering
+
+    players.forEach(player => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${player.name}</td>
+            <td><input type="number" value="${player.handicap}" readonly /></td>
+            ${player.scores.map(() => `<td><input type="number" /></td>`).join('')}
+        `;
+        playersBody.appendChild(row);
+    });
+}
+
+function calculateStableford() {
+    const resultsBody = document.getElementById('results-body');
+    resultsBody.innerHTML = ''; // Clear previous results
+
+    const playerRows = document.querySelectorAll('#players-body tr');
+    playerRows.forEach((row, playerIndex) => {
+        const playerName = row.children[0].textContent;
+        const handicap = Number(row.children[1].children[0].value);
+        const scores = Array.from(row.querySelectorAll('input[type="number"]')).slice(2).map(input => Number(input.value));
+
+        let stablefordPoints = 0;
+
+        scores.forEach((score, holeIndex) => {
+            const { par, strokeIndex } = course[holeIndex];
+            const strokesReceived = Math.floor(handicap / 18) + (handicap % 18 >= strokeIndex ? 1 : 0);
+            const netScore = score - strokesReceived;
+            stablefordPoints += calculatePoints(par, netScore);
+        });
+
+        const resultRow = document.createElement('tr');
+        resultRow.innerHTML = `<td>${playerName}</td><td>${stablefordPoints}</td>`;
+        resultsBody.appendChild(resultRow);
+    });
+}
+
+function calculatePoints(par, netScore) {
+    const scoreDifference = netScore - par;
+    switch (scoreDifference) {
+        case -2: return 4;
+        case -1: return 3;
+        case 0: return 2;
+        case 1: return 1;
+        default: return 0;
+    }
+}
+
+// Initialize course and players table on load
+document.addEventListener('DOMContentLoaded', () => {
+    updateCourseTable();
+    updatePlayersTable();
+});
