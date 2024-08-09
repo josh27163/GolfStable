@@ -133,8 +133,48 @@ function calculateStableford() {
         messageElement.textContent = 'No winners determined. Please check the scores.';
         msgText = 'No winners determined. Please check the scores.';
     }
-    alert(msgText);
+    
+    // Replace the alert with a custom modal
+    showCustomModal(msgText);
     resultsBody.parentNode.insertAdjacentElement('afterend', messageElement);
+}
+
+// Add this new function to create and show a custom modal
+function showCustomModal(message) {
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    `;
+
+    const modalContent = document.createElement('div');
+    modalContent.style.cssText = `
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        max-width: 80%;
+        text-align: center;
+    `;
+
+    const messageElement = document.createElement('p');
+    messageElement.textContent = message;
+
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.onclick = () => document.body.removeChild(modal);
+
+    modalContent.appendChild(messageElement);
+    modalContent.appendChild(closeButton);
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
 }
 
 function calculatePoints(par, netScore) {
