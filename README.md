@@ -1,0 +1,1 @@
+Proper wicked ting bruh like this is so crazy its kinda unreal, how is this guy such a god at the coding practices that he can make such a complicated matematical calculator for advanced golf scoring like no other humanoid on earth. truly ground breaking stuff that will blow you socks off if i do say so myself its wild that its so crazy ngl.
