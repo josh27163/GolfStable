@@ -121,11 +121,11 @@ function calculatePoints(par, netScore) {
 }
 
 function toggleVisibility(id) {
-    var element = document.getElementById(id);
-    if (element.style.display === 'none') {
-        element.style.display = '';
+    const element = document.getElementById(id);
+    if (element.style.display === "none") {
+        element.style.display = "table-row-group"; // or "block" if not a table
     } else {
-        element.style.display = 'none';
+        element.style.display = "none";
     }
 }
 
