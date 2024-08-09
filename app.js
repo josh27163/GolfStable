@@ -124,14 +124,14 @@ function calculateStableford() {
     let msgText = '';
     messageElement.id = 'winner-message';
     if (winners.length === 1) {
-        messageElement.textContent = `Congratulations to ${winners[0]} for winning with ${highestScore} points!`;
-        msgText = `Congratulations to ${winners[0]} for winning with ${highestScore} points!`;
+        messageElement.textContent = `🏆 CHAMPION CROWNED! ${winners[0]} conquers the course with an astounding ${highestScore} points! 🎉`;
+        msgText = `🏆 CHAMPION CROWNED! ${winners[0]} conquers the course with an astounding ${highestScore} points! 🎉`;
     } else if (winners.length > 1) {
-        messageElement.textContent = `It's a tie! Congratulations to ${winners.join(', ')} for winning with ${highestScore} points each!`;
-        msgText = `It's a tie! Congratulations to ${winners.join(', ')} for winning with ${highestScore} points each!`;
+        messageElement.textContent = `⚡️ EPIC SHOWDOWN! ${winners.join(', ')} clash at the summit with a mind-blowing ${highestScore} points each! 🏅🏅`;
+        msgText = `⚡️ EPIC SHOWDOWN! ${winners.join(', ')} clash at the summit with a mind-blowing ${highestScore} points each! 🏅🏅`;
     } else {
-        messageElement.textContent = 'No winners determined. Please check the scores.';
-        msgText = 'No winners determined. Please check the scores.';
+        messageElement.textContent = '😱 UNBELIEVABLE! No victor emerges from this legendary battle. Check the scores and prepare for the next epic clash! 🔍';
+        msgText = '😱 UNBELIEVABLE! No victor emerges from this legendary battle. Check the scores and prepare for the next epic clash! 🔍';
     }
     
     // Replace the alert with a custom modal
