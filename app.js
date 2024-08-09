@@ -48,7 +48,7 @@ function updatePlayersTable() {
         row.innerHTML = `
             <td>${player.name}</td>
             <td><input type="number" inputmode="numeric" value="${player.handicap}" /></td>
-            ${player.scores.map((score, index) => `<td><input type="number" inputmode="numeric" value="${score}" data-player="${player.name}" data-index="${index}" /></td>`).join('')}
+            ${player.scores.map((score, index) => `<td><input type="number" inputmode="numeric" pattern="[0-9]*" value="${score}" data-player="${player.name}" data-index="${index}" /></td>`).join('')}
         `;
         playersBody.appendChild(row);
     });
