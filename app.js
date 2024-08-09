@@ -10,7 +10,7 @@ const course = [
     { hole: 9, par: 4, strokeIndex: 2 }
 ];
 
-const players = [
+let players = [
     { name: 'Tom', handicap: 4, scores: Array(course.length).fill(0) },
     { name: 'Garry', handicap: 12, scores: Array(course.length).fill(0) },
     { name: 'Nigel', handicap: 12, scores: Array(course.length).fill(0) },
@@ -47,11 +47,41 @@ function updatePlayersTable() {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${player.name}</td>
-            <td><input type="number" value="${player.handicap}" readonly /></td>
-            ${player.scores.map(() => `<td><input type="number" /></td>`).join('')}
+            <td><input type="number" inputmode="numeric" value="${player.handicap}" /></td>
+            ${player.scores.map((score, index) => `<td><input type="number" inputmode="numeric" value="${score}" data-player="${player.name}" data-index="${index}" /></td>`).join('')}
         `;
         playersBody.appendChild(row);
     });
+
+    // Add event listeners to all score inputs
+    document.querySelectorAll('input[type="number"]').forEach(input => {
+        input.addEventListener('change', function() {
+            saveScores();
+        });
+    });
+}
+
+function saveScores() {
+    players.forEach(player => {
+        const inputs = document.querySelectorAll(`input[data-player="${player.name}"]`);
+        player.scores = Array.from(inputs).map(input => Number(input.value));
+    });
+    localStorage.setItem('players', JSON.stringify(players));
+}
+
+function loadScores() {
+    const storedPlayers = JSON.parse(localStorage.getItem('players'));
+    if (storedPlayers) {
+        players = storedPlayers;
+    }
+}
+
+function resetPlayers() {
+    localStorage.clear(); // Clears all local storage data
+    players.forEach(player => {
+        player.scores = Array(course.length).fill(0); // Reset scores to 0
+    });
+    updatePlayersTable(); // Re-render the players table with reset scores
 }
 
 function calculateStableford() {
@@ -102,5 +132,6 @@ function toggleVisibility(id) {
 // Initialize course and players table on load
 document.addEventListener('DOMContentLoaded', () => {
     updateCourseTable();
+    loadScores();
     updatePlayersTable();
 });
