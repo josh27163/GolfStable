@@ -88,36 +88,36 @@ function calculateStableford() {
     const resultsBody = document.getElementById('results-body');
     resultsBody.innerHTML = ''; // Clear previous results
 
-    const playerRows = document.querySelectorAll('#players-body tr');
-    playerRows.forEach((row, playerIndex) => {
-        const playerName = row.children[0].textContent;
-        const handicap = Number(row.children[1].children[0].value);
-        const scores = Array.from(row.querySelectorAll('input[type="number"]')).slice(2).map(input => Number(input.value));
-
+    players.forEach(player => {
         let stablefordPoints = 0;
+        const handicapStrokes = course.map(hole => 
+            Math.floor(player.handicap / 9) + (hole.strokeIndex <= (player.handicap % 9) ? 1 : 0)
+        );
 
-        scores.forEach((score, holeIndex) => {
-            const { par, strokeIndex } = course[holeIndex];
-            const strokesReceived = Math.floor(handicap / 18) + (handicap % 18 >= strokeIndex ? 1 : 0);
+        player.scores.forEach((score, holeIndex) => {
+            if (score === 0) return; // Skip holes with no score
+
+            const { par } = course[holeIndex];
+            const strokesReceived = handicapStrokes[holeIndex];
             const netScore = score - strokesReceived;
             stablefordPoints += calculatePoints(par, netScore);
         });
 
         const resultRow = document.createElement('tr');
-        resultRow.innerHTML = `<td>${playerName}</td><td>${stablefordPoints}</td>`;
+        resultRow.innerHTML = `<td>${player.name}</td><td>${stablefordPoints}</td>`;
         resultsBody.appendChild(resultRow);
     });
 }
 
 function calculatePoints(par, netScore) {
-    const scoreDifference = netScore - par;
-    switch (scoreDifference) {
-        case -2: return 4;
-        case -1: return 3;
-        case 0: return 2;
-        case 1: return 1;
-        default: return 0;
-    }
+    const difference = par - netScore;
+    if (difference <= -2) return 0;
+    if (difference === -1) return 1;
+    if (difference === 0) return 2;
+    if (difference === 1) return 3;
+    if (difference === 2) return 4;
+    if (difference >= 3) return 5;
+    return 0;
 }
 
 function toggleVisibility(id) {
