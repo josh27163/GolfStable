@@ -31,6 +31,7 @@
             margin: 5px 0; /* Spacing between inputs */
             border: 1px solid #ccc; /* Consistent border styling */
             border-radius: 4px; /* Rounded borders for modern look */
+            min-width: 50px; /* Minimum width to ensure visibility */
         }
         button {
             width: 100%; /* Full width button */
@@ -44,6 +45,14 @@
         }
         button:hover {
             background-color: #45a049; /* Slightly darker on hover */
+        }
+        @media (max-width: 600px) {
+            th, td {
+                font-size: 14px; /* Smaller font size for better fit */
+            }
+            input[type="number"], input[type="text"] {
+                padding: 8px; /* Smaller padding for better fit */
+            }
         }
     </style>
 </head>
