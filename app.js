@@ -90,6 +90,15 @@ function calculatePoints(par, netScore) {
     }
 }
 
+function toggleVisibility(id) {
+    var element = document.getElementById(id);
+    if (element.style.display === 'none') {
+        element.style.display = '';
+    } else {
+        element.style.display = 'none';
+    }
+}
+
 // Initialize course and players table on load
 document.addEventListener('DOMContentLoaded', () => {
     updateCourseTable();
