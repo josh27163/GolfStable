@@ -11,17 +11,17 @@ const course = [
 ];
 
 let players = [
-    { name: 'Tom', handicap: 4, scores: Array(course.length).fill(0) },
-    { name: 'Garry', handicap: 12, scores: Array(course.length).fill(0) },
-    { name: 'Nigel', handicap: 12, scores: Array(course.length).fill(0) },
-    { name: 'Porky', handicap: 12, scores: Array(course.length).fill(0) },
-    { name: 'Whybrow', handicap: 22, scores: Array(course.length).fill(0) },
-    { name: 'Gibbs', handicap: 14, scores: Array(course.length).fill(0) },
-    { name: 'Josh', handicap: 7, scores: Array(course.length).fill(0) },
-    { name: 'George', handicap: 4, scores: Array(course.length).fill(0) },
-    { name: 'Chelsea', handicap: 16, scores: Array(course.length).fill(0) },
-    { name: 'Iwan', handicap: 12, scores: Array(course.length).fill(0) },
-    { name: 'Balaam', handicap: 15, scores: Array(course.length).fill(0) }
+    { name: 'Tom', handicap: 4, scores: Array(course.length).fill(null) },
+    { name: 'Garry', handicap: 12, scores: Array(course.length).fill(null) },
+    { name: 'Nigel', handicap: 12, scores: Array(course.length).fill(null) },
+    { name: 'Porky', handicap: 12, scores: Array(course.length).fill(null) },
+    { name: 'Whybrow', handicap: 22, scores: Array(course.length).fill(null) },
+    { name: 'Gibbs', handicap: 14, scores: Array(course.length).fill(null) },
+    { name: 'Josh', handicap: 7, scores: Array(course.length).fill(null) },
+    { name: 'George', handicap: 4, scores: Array(course.length).fill(null) },
+    { name: 'Chelsea', handicap: 16, scores: Array(course.length).fill(null) },
+    { name: 'Iwan', handicap: 12, scores: Array(course.length).fill(null) },
+    { name: 'Balaam', handicap: 15, scores: Array(course.length).fill(null) }
 ];
 
 function updateCourseTable() {
@@ -48,7 +48,7 @@ function updatePlayersTable() {
         row.innerHTML = `
             <td>${player.name}</td>
             <td><input type="number" inputmode="numeric" value="${player.handicap}" /></td>
-            ${player.scores.map((score, index) => `<td><input type="number" inputmode="numeric" pattern="[0-9]*" value="${score}" data-player="${player.name}" data-index="${index}" /></td>`).join('')}
+            ${player.scores.map((score, index) => `<td><input type="number" inputmode="numeric" pattern="[0-9]*" value="${score !== null ? score : ''}" data-player="${player.name}" data-index="${index}" /></td>`).join('')}
         `;
         playersBody.appendChild(row);
     });
@@ -64,7 +64,7 @@ function updatePlayersTable() {
 function saveScores() {
     players.forEach(player => {
         const inputs = document.querySelectorAll(`input[data-player="${player.name}"]`);
-        player.scores = Array.from(inputs).map(input => Number(input.value));
+        player.scores = Array.from(inputs).map(input => input.value);
     });
     localStorage.setItem('players', JSON.stringify(players));
 }
@@ -79,7 +79,7 @@ function loadScores() {
 function resetPlayers() {
     localStorage.clear(); // Clears all local storage data
     players.forEach(player => {
-        player.scores = Array(course.length).fill(0); // Reset scores to 0
+        player.scores = Array(course.length).fill(null); // Reset scores to null
     });
     updatePlayersTable(); // Re-render the players table with reset scores
 }
@@ -95,11 +95,12 @@ function calculateStableford() {
         );
 
         player.scores.forEach((score, holeIndex) => {
-            if (score === 0) return; // Skip holes with no score
+            if (score === null || score === '') return; // Skip holes with no score
 
             const { par } = course[holeIndex];
             const strokesReceived = handicapStrokes[holeIndex];
             const netScore = score - strokesReceived;
+            console.log(player.name, score, strokesReceived, netScore);
             stablefordPoints += calculatePoints(par, netScore);
         });
 
