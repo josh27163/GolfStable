@@ -6,52 +6,61 @@
     <title>Golf Stableford Scoring</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f4f4f4; /* Light grey background for a modern look */
+            background-color: #f4f4f4;
+            width: 100%;
+            color: #333; /* Darker text color for better readability */
+        }
+        h1, h2 {
+            color: #4CAF50; /* Green color for headings */
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: #fff; /* White background for tables */
         }
         th, td {
-            border: 1px solid #ccc; /* Lighter border color */
-            padding: 12px; /* Increased padding for better readability */
-            text-align: left; /* Align text to left for modern look */
+            border: 1px solid #ddd; /* Lighter border color */
+            padding: 15px; /* Increased padding for better readability */
+            text-align: left;
         }
         th {
-            background-color: #e8e8e8; /* Slightly darker header for contrast */
+            background-color: #4CAF50; /* Green background for headers */
+            color: white; /* White text for headers */
         }
         input[type="number"], input[type="text"] {
-            width: calc(100% - 24px); /* Full width with padding */
-            padding: 10px; /* Padding for better touch interaction */
-            margin: 5px 0; /* Spacing between inputs */
-            border: 1px solid #ccc; /* Consistent border styling */
-            border-radius: 4px; /* Rounded borders for modern look */
-            min-width: 50px; /* Minimum width to ensure visibility */
+            width: calc(100% - 24px);
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            min-width: 50px;
+            box-sizing: border-box; /* Ensure padding is included in width */
         }
         button {
-            width: 100%; /* Full width button */
-            padding: 12px; /* Larger padding for easier interaction */
-            background-color: #4CAF50; /* Green color for primary actions */
-            color: white; /* White text for contrast */
-            border: none; /* No border for button */
-            border-radius: 4px; /* Rounded corners for the button */
-            cursor: pointer; /* Pointer cursor on hover */
-            transition: background-color 0.3s; /* Smooth transition for hover effect */
+            width: 100%;
+            padding: 15px; /* Larger padding for easier interaction */
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effect */
         }
         button:hover {
-            background-color: #45a049; /* Slightly darker on hover */
+            background-color: #45a049;
+            transform: scale(1.05); /* Slightly enlarge button on hover */
         }
         @media (max-width: 600px) {
             th, td {
-                font-size: 14px; /* Smaller font size for better fit */
+                font-size: 14px;
             }
             input[type="number"], input[type="text"] {
-                padding: 8px; /* Smaller padding for better fit */
+                padding: 8px;
             }
         }
     </style>
@@ -76,15 +85,15 @@
         <tr>
             <th>Player Name</th>
             <th style="width: 100px;text-align: center;">Handicap</th>
-            <th style="text-align: center;">1</th>
-            <th style="text-align: center;">2</th>
-            <th style="text-align: center;">3</th>
-            <th style="text-align: center;">4</th>
-            <th style="text-align: center;">5</th>
-            <th style="text-align: center;">6</th>
-            <th style="text-align: center;">7</th>
-            <th style="text-align: center;">8</th>
-            <th style="text-align: center;">9</th>
+            <th style="text-align: center;">1<br>Par 3</th>
+            <th style="text-align: center;">2<br>Par 4</th>
+            <th style="text-align: center;">3<br>Par 3</th>
+            <th style="text-align: center;">4<br>Par 4</th>
+            <th style="text-align: center;">5<br>Par 3</th>
+            <th style="text-align: center;">6<br>Par 4</th>
+            <th style="text-align: center;">7<br>Par 3</th>
+            <th style="text-align: center;">8<br>Par 4</th>
+            <th style="text-align: center;">9<br>Par 4</th>
         </tr>
         <tbody id="players-body">
             <!-- Players and their scores will be dynamically inserted here -->
